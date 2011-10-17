@@ -66,11 +66,18 @@
  *
  *{@link http://codex.wordpress.org/Function_Reference/add_editor_style }
  */
- 
-function js_editor_style() {
-	add_editor_style( 'css/editor.css' );
-}
-add_action( 'after_setup_theme', 'js_editor_style' );
+
+
+
+//Custom css in editor
+//function js_editor_style() {
+//	add_editor_style( 'admin/css/editor.css' );
+//}
+//add_action( 'after_setup_theme', 'js_editor_style' );
+
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Admin Custom Logo
@@ -85,6 +92,10 @@ function js_custom_dashboard_logo() {
 	</style>
 	';
 }
+
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Custom Login Logo Support
@@ -106,6 +117,10 @@ add_action('login_head', 'js_custom_login_logo');
 add_filter('login_headerurl', 'js_wp_login_url');
 add_filter('login_headertitle', 'js_wp_login_title');
 
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /*	Custom Admin Footer Text
 /*-----------------------------------------------------------------------------------*/
@@ -115,6 +130,10 @@ function js_custom_admin_footer() {
 }
 add_filter('admin_footer_text', 'js_custom_admin_footer');
 
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /*	Custom Admin CSS
 /*-----------------------------------------------------------------------------------*/
@@ -123,6 +142,10 @@ function js_custom_admin_css() {
 }
 
 add_action('admin_head', 'js_custom_admin_css');
+
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Remove Dashboard Admin Menus
@@ -146,6 +169,10 @@ function remove_menus() {
 }
 add_action( 'admin_menu', 'remove_menus' );
 
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Update notice to admin only
 /*-----------------------------------------------------------------------------------*/
@@ -156,6 +183,10 @@ if (!current_user_can('update_plugins')) { // checks to see if current user can 
 	add_filter( 'pre_option_update_core', create_function( '$a', "return null;" ) );
 }
 
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Make Custom Post Types Searchable
 /*-----------------------------------------------------------------------------------*/
@@ -164,6 +195,10 @@ function searchAll( $query ) {
 	return $query;
 }
 add_filter( 'the_search_query', 'searchAll' );
+
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Add Custom Post Types to RSS Feed
@@ -174,6 +209,10 @@ function custom_feed_request( $vars ) {
 	return $vars;
 }
 add_filter( 'request', 'custom_feed_request' );
+
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Add Custom Post Types to the Right Now Dashboard Widget
@@ -213,6 +252,10 @@ function wph_right_now_content_table_end() {
 }
 add_action( 'right_now_content_table_end' , 'wph_right_now_content_table_end' );
 
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Add Custom Dashboard Widget
 /*-----------------------------------------------------------------------------------*/
@@ -226,6 +269,10 @@ function my_custom_dashboard_widgets() {
     echo '<p>Lorum ipsum delor sit amet et nunc</p>';
 }
 
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Remove pings to self
 /*-----------------------------------------------------------------------------------*/
@@ -236,6 +283,11 @@ function no_self_ping( &$links ) {
             unset($links[$l]);
 }
 add_action( 'pre_ping', 'no_self_ping' );
+
+
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Display current page resource consumption in footer
@@ -252,6 +304,10 @@ function performance( $visible = false ) {
 }
 add_action( 'wp_footer', 'performance', 20 );
 
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Remove the read more hash that cause page jump
 /*-----------------------------------------------------------------------------------*/
@@ -267,11 +323,19 @@ function remove_more_jump_link($link) {
 }
 add_filter('the_content_more_link', 'remove_more_jump_link');
 
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Make TinyMCE Accept iFrames
 /*-----------------------------------------------------------------------------------*/
 add_filter('tiny_mce_before_init', create_function( '$a',
 '$a["extended_valid_elements"] = "iframe[id|class|title|style|align|frameborder|height|longdesc|marginheight|marginwidth|name|scrolling|src|width]"; return $a;') );
+
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Add next page button in tiny mce

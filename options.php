@@ -66,7 +66,7 @@ function optionsframework_options() {
 	}
 		
 	// If using image radio buttons, define a directory path
-	$imagepath =  get_bloginfo('stylesheet_directory') . '/images/admin/ ';
+	$imagepath =  get_bloginfo('stylesheet_directory') . '/includes/admin/images/ ';
 		
 	$options = array();
 	
@@ -80,6 +80,16 @@ function optionsframework_options() {
 	$options[] = array( "name" => "What do I do?",
 						"desc" => "This is the theme options panel, here you can customize several aspects of it and activate/deactivate certain functions, feel free to explore and to experiment the options.<br/><br/>In this screen you will define a couple of general aspects of the site.",
 						"type" => "info");
+						
+	$options[] = array( "name" => "Logo",
+						"desc" => "Upload your logo here.",
+						"id" => "logo",
+						"type" => "upload");
+						
+	$options[] = array( "name" => "Favicon",
+						"desc" => "Upload your favicon here. Recomended size: 16px x 16px",
+						"id" => "favicon",
+						"type" => "upload");
 
 	$options[] = array( "name" => "Feedburner",
 						"desc" => 'If you have a <a target="_blank" href="http://feedburner.google.com/" title="Go to FeedBurner">FeedBurner</a> account you can paste your feed url here and it will override the default feed.',
@@ -87,29 +97,12 @@ function optionsframework_options() {
 						"std" => "",
 						"type" => "text");
 
-	$options[] = array( "name" => "Portfolio Page",
-						"desc" => "Select the portfolio page please.",
-						"id" => "portfolio_page_id",
-						"type" => "select",
-						"options" => $options_pages);
-						
-	$options[] = array( "name" => "Special Category",
-						"desc" => "The selected category will be displayed in a block view just like the portfolio but without sorting.",
-						"id" => "special_cat",
-						"type" => "select",
-						"options" => $options_categories);
-						
-	$options[] = array( "name" => "Text On Comment Form",
-						"desc" => "Write something to encourage your visitors to leave a message.",
-						"id" => "comments_message",
-						"std" => "",
-						"type" => "text");
-
 	$options[] = array( "name" => "Analytics",
-						"desc" => 'Paste your <a target="_blank" href="http://www.google.com/analytics/" title="Go to Google Analytics">Google Analytics</a> (or other) here. The code will not appear to admins, that way you won\'t influence your statistics.',
+						"desc" => 'Paste your <a target="_blank" href="http://www.google.com/analytics/" title="Go to Google Analytics">Google Analytics</a> site tracking ID here. eg. UA-12345678-9. <br/> The code will not appear to admins, that way you won\'t influence your statistics.',
 						"id" => "analytics",
 						"std" => "",
-						"type" => "rawtextarea");
+						"class" => "mini",
+						"type" => "text");
 		
 	/*-----------------------------------------------------------------------------------*/
 	/* Example Options
@@ -119,7 +112,7 @@ function optionsframework_options() {
 						"type" => "heading");
 						
 	$options[] = array( "name" => "Information Area",
-						"desc" => "This is the description.",
+						"desc" => "This is the description. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
 						"type" => "info");
 							
 	$options[] = array( "name" => "Input Text Mini",
@@ -140,6 +133,12 @@ function optionsframework_options() {
 						"id" => "example_textarea",
 						"std" => "Default Text",
 						"type" => "textarea");
+						
+	$options[] = array( "name" => "Raw Textarea",
+						"desc" => 'Everything you insert here will not be stripped out by WordPress. Useful for analytics and such.',
+						"id" => "raw_text",
+						"std" => "",
+						"type" => "rawtextarea");
 						
 	$options[] = array( "name" => "Input Select Small",
 						"desc" => "Small Select Box.",

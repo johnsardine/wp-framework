@@ -6,7 +6,7 @@
 
 /* Meta Boxes */
 include_once 'includes/meta-box/meta-box.class.php';
-include 'includes/meta-box.php';
+//include 'includes/meta-box.php';
 
 /* Custom Post Types */
 include_once 'includes/custom-post-type.php';
@@ -37,6 +37,9 @@ include_once 'includes/modal-window.php';
 
 if ( ! isset( $content_width ) ) $content_width = 940;
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Remove WPHEAD Elements
 /*-----------------------------------------------------------------------------------*/
@@ -50,6 +53,9 @@ remove_action( 'wp_head', 'start_post_rel_link', 10, 0 );
 remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10, 0 );
 remove_action( 'wp_head', 'wp_generator' );
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Register Scripts
 /*-----------------------------------------------------------------------------------*/
@@ -61,34 +67,17 @@ function js_scripts() {
 		wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', false, null, false);
 		wp_register_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr.min.js', false, '2.0.6', false);
 		wp_register_script('cookie', get_template_directory_uri() . '/js/libs/jquery.cookie.js', 'jquery', '1.0', true);
-		wp_register_script('superfish', get_template_directory_uri() . '/js/libs/jquery.superfish.js', 'jquery', '1.4.8', true);
-		wp_register_script('slides', get_template_directory_uri() . '/js/libs/jquery.slides.js', 'jquery', '1.1.6', true);
-		wp_register_script('fancybox', get_template_directory_uri() . '/js/libs/jquery.fancybox.all.js', 'jquery', '1.3.4', true);
-		wp_register_script('quicksand', get_template_directory_uri() . '/js/libs/jquery.quicksand.js', 'jquery', '1.2.2', true);
-		wp_register_script('placeholder', get_template_directory_uri() . '/js/libs/jquery.placeholder.js', 'jquery', '1.0', true);
-		wp_register_script('validate', get_template_directory_uri() . '/js/libs/jquery.validate.js', 'jquery', '1.8.1', true);
-		wp_register_script('twitter', get_template_directory_uri() . '/js/libs/jquery.twitter.js', 'jquery', '1.5', true);
+		wp_register_script('fancybox', get_template_directory_uri() . '/fancybox/jquery.fancybox.all.js', 'jquery', '1.3.4', true);
 		wp_register_script('custom', get_template_directory_uri() . '/js/script.js', 'jquery', '1.0', true);
 		
 		wp_enqueue_script('modernizr');
 		wp_enqueue_script('jquery');
 		wp_enqueue_script('cookie');
-		wp_enqueue_script('superfish');
 		wp_enqueue_script('fancybox');
-		wp_enqueue_script('twitter');
 	}
 }
 add_action('init', 'js_scripts');
 
-
-/* Remove DL Monitor Style in frontend */
-function dl_monitor_remove() {
-	if (function_exists('wp_register_style') && function_exists('wp_enqueue_style') && !is_admin()) {
-	    
-	    wp_deregister_style('wp_dlmp_styles');
-    }
-}
-add_action('wp_print_styles', 'dl_monitor_remove');
 
 /* Load Filtering and Slides Script on Works */
 function js_portfolio_script() {
@@ -101,15 +90,6 @@ function js_portfolio_script() {
 }
 add_action('wp_print_scripts', 'js_portfolio_script');
 
-/* Load placeholder script on contact page and single page */
-function js_contact_script() {
-	if (is_page_template('template-contact.php') || is_single() ) {
-			wp_enqueue_script('validate'); 
-			wp_enqueue_script('placeholder'); 
-	}	
-}
-add_action('wp_print_scripts', 'js_contact_script');
-
 // load single scripts only on single pages
 function js_single_script() {
 	if(is_singular() || is_page()) {
@@ -118,16 +98,22 @@ function js_single_script() {
 }
 add_action('wp_print_scripts', 'js_single_script');
 
-/* Load custom scripts */
+/* Load custom scripts at the end */
 function js_custom_script() {
 		wp_enqueue_script('custom');
 }
 add_action('wp_print_scripts', 'js_custom_script');
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Add Multilanguage Support Support
 /*-----------------------------------------------------------------------------------*/
 load_theme_textdomain( 'js' );
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Add Menu Support
@@ -143,37 +129,39 @@ function register_main_menus() {
 };
 if (function_exists('register_nav_menus')) add_action( 'init', 'register_main_menus' );
 
+
+/* Get Custom menu with fallback to pages or categories */
 function js_get_menu($location = null, $source = 'categories', $menu_class = 'menu') {
 	$menu = '';
 	
-	if (!$location) {
-		echo '<p>You need to provide a menu location.</p>';
-	} else {
-	
-		if (function_exists('wp_nav_menu')) {
-		    $menu = wp_nav_menu( array( 
-		    	'theme_location' => $location,
-		    	'container' => '',
-		    	'fallback_cb' => '',
-		    	'menu_class' => $menu_class,
-		    	'echo' => false 
-		    ));
-		}
-		if ($menu == '') {
-		    echo '<ul class="'. $menu_class .'">';
-		    if ($source == 'categories') {
-		    	wp_list_categories('title_li=&depth=3');
-		    } else {
-		    	wp_list_pages('title_li=&depth=3');
-		    }
-		    echo '</ul>';
-		} else {
-			echo($menu);
-		}
-	
+	//if custom menu exists, create it
+	if ($location && function_exists('wp_nav_menu')) {
+	    $menu = wp_nav_menu( array( 
+	    	'theme_location' => $location,
+	    	'container' => '',
+	    	'fallback_cb' => '',
+	    	'menu_class' => $menu_class,
+	    	'echo' => false 
+	    ));
 	}
-	
+
+	//if custom menu does not exist fallback to categories or pages
+	if ($menu == '') {
+	    echo '<ul class="'. $menu_class .'">';
+	    if ($source == 'categories') {
+	    	wp_list_categories('title_li=&depth=3');
+	    } else {
+	    	wp_list_pages('title_li=&depth=3');
+	    }
+	    echo '</ul>';
+	} else {
+		//menu exists, echo menu
+	    echo ($menu);
+	}
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Portfolio - Single Images (Just for reference)
@@ -200,46 +188,53 @@ function js_get_menu($location = null, $source = 'categories', $menu_class = 'me
 //    	echo '<hr/>';
 //    endforeach;
 //endif;
-function js_post_thumbnail($thumb_size = null, $fallback_size = null) {
-if (!$fallback_size) {
-	$fallback_size = '50';
-}
-if (!$thumb_size) {
-	$thumb_size = 'thumbnail';
-}
-$thumb_attr = array('title'	=> __('View ') . get_the_title());
+function js_thumbnail($thumb_size = 'thumbnail', $fallback_size = '50') {
+	$thumb_attr = array('title'	=> __('View ') . get_the_title());
 	if (has_post_thumbnail()) {
 		the_post_thumbnail($thumb_size, $thumb_attr);
 	} else {
-		echo '<img src="http://placehold.it/'.$fallback_size.'" alt=""/>';
+		echo '<img src="http://placehold.it/'.$fallback_size.'" alt="Placeholder"/>';
 	}
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Get featured image url
 /*-----------------------------------------------------------------------------------*/
 
-function js_thumb_urlfull($img_size) {
+function js_thumbnail_url($size = 'thumbnail', $echo = false) {
 	$image_id = get_post_thumbnail_id($post->ID);
-	$image_url = wp_get_attachment_image_src($image_id,$img_size);
+	$image_url = wp_get_attachment_image_src($image_id, $size);
 	$image_url = $image_url[0];
-
-	echo $image_url;
+	
+	if ($echo) {
+		echo $image_url;
+	} else {
+		return $image_url;
+	}
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Define Image Sizes
 /*-----------------------------------------------------------------------------------*/
 add_theme_support('post-thumbnails');
 //default sizes
-update_option('thumbnail_size_w', 220);
-update_option('thumbnail_size_h', 136);
-update_option('medium_size_w', 400);
+update_option('thumbnail_size_w', 160);
+update_option('thumbnail_size_h', 100);
+update_option('medium_size_w', 340);
 update_option('medium_size_h', 9999);
-update_option('large_size_w', 580);
+update_option('large_size_w', 640);
 update_option('large_size_h', 9999);
 //custom sizes
-add_image_size( 'small-thumb', 50, 50, true ); // name, width, height, crop
+//add_image_size( 'small-thumb', 50, 50, true ); // name, width, height, crop
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Register Widger Areas/Sidebars
@@ -254,61 +249,10 @@ if ( function_exists('register_sidebar') ) {
 	'after_widget'  => '</div>',
 	'before_title'  => '<h3 class="widgettitle">',
 	'after_title'	=> '</h3>'));
-	
-	register_sidebar(array(
-	'id'			=> 'page-sidebar',
-	'name' 			=> 'Pages Sidebar',
-	'description'	=> 'This is the default sidebar for pages.',
-	'before_widget' => '<div id="%1$s" class="widget %2$s">',
-	'after_widget'  => '</div>',
-	'before_title'  => '<h3 class="widgettitle">',
-	'after_title'	=> '</h3>'));
-	
-	register_sidebar(array(
-	'id'			=> 'special-sidebar',
-	'name' 			=> 'Special Cat Sidebar',
-	'description'	=> 'This sidebar will appear in the selected special category in the theme options.',
-	'before_widget' => '<div id="%1$s" class="widget %2$s">',
-	'after_widget'  => '</div>',
-	'before_title'  => '<h3 class="widgettitle">',
-	'after_title'	=> '</h3>'));
-
-	register_sidebar(array(
-	'id'			=> 'portfolio-sidebar',
-	'name' 			=> 'Portfolio Sidebar',
-	'description'	=> 'This sidebar is displayed in the portfolio page only, add the widget "Portfolio Filter" and other widgets of your preference.',
-	'before_widget' => '<div id="%1$s" class="widget %2$s">',
-	'after_widget'  => '</div>',
-	'before_title'  => '<h3 class="widgettitle">',
-	'after_title'	=> '</h3>'));
-	
-	register_sidebar(array(
-	'id'			=> 'portfolio-widgets',
-	'name' 			=> 'Portfolio Footer',
-	'description'	=> 'These widgets will appear in the portfolio page.',
-	'before_widget' => '<div id="%1$s" class="block-1 widget %2$s">',
-	'after_widget'  => '</div>',
-	'before_title'  => '<h3 class="widgettitle small">',
-	'after_title'	=> '</h3><hr/>'));
-	
-	register_sidebar(array(
-	'id'			=> 'footer-widgets',
-	'name' 			=> 'Footer',
-	'description'	=> 'These widgets will appear in the bottom the website.',
-	'before_widget' => '<div id="%1$s" class="block-1 widget %2$s">',
-	'after_widget'  => '</div>',
-	'before_title'  => '<h3 class="widgettitle small">',
-	'after_title'	=> '</h3><hr/>'));
-
-	register_sidebar(array(
-	'id'			=> 'homepage-widgets',
-	'name' 			=> 'Homepage Footer',
-	'description'	=> 'These widgets will appear in the homepage.',
-	'before_widget' => '<div id="%1$s" class="block-1 widget %2$s">',
-	'after_widget'  => '</div>',
-	'before_title'  => '<h3 class="widgettitle small">',
-	'after_title'	=> '</h3><hr/>'));
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Custom Gravatar Support
@@ -320,6 +264,9 @@ function js_custom_gravatar( $avatar_defaults ) {
     return $avatar_defaults;
 }
 add_filter( 'avatar_defaults', 'js_custom_gravatar' );
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Custom Excerpt - <?php echo excerpt(15); ?>
@@ -342,6 +289,9 @@ function excerpt($limit, $echo_excerpt = true) {
 	}
 }
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /*	Is Category or sub category of the entered id by http://valendesigns.com/
 /*-----------------------------------------------------------------------------------*/
@@ -353,6 +303,9 @@ if (!function_exists('is_category_or_sub')) {
 	    return false;
 	}
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Is page or sub page of the entered id/name by http://valendesigns.com/
@@ -374,18 +327,24 @@ if (!function_exists('is_page_or_sub')) {
     }
 }
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /*	Get Post/Page Content
 /*-----------------------------------------------------------------------------------*/
-function js_get_content($the_id) {
-
-	$item_id = get_post($the_id);
-	$content = $item_id->post_content;
-	$content = apply_filters('the_content', $content);
-	$content = str_replace(']]>', ']]>', $content);
-	echo $content;
-
+function js_get_content($the_id = null) {
+	if ($the_id) {
+		$item_id = get_post($the_id);
+		$content = $item_id->post_content;
+		$content = apply_filters('the_content', $content);
+		$content = str_replace(']]>', ']]>', $content);
+		echo $content;
+	}
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Get Category ID
@@ -396,6 +355,9 @@ function get_category_id($cat_name){
 	return $term->term_id;
 }
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /*	Get Page ID
 /*-----------------------------------------------------------------------------------*/
@@ -405,6 +367,9 @@ function get_page_id($page_name){
 	$page_name = $wpdb->get_var("SELECT ID FROM $wpdb->posts WHERE post_name = '".$page_name."'");
 	return $page_name;
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /*	Get author posts link
@@ -418,6 +383,9 @@ function js_author($author_meta = 'nickname') {
 	echo '<a href="'. $curr_author_posts .'" title="'. __('View author posts', 'js') .'">'. get_the_author_meta($author_meta) .'</a>';
 }
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /*	Add class to body in special situations
 /*-----------------------------------------------------------------------------------*/
@@ -430,6 +398,9 @@ function js_author($author_meta = 'nickname') {
 //     return $classes; 
 //}
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* 404 Message
 /*-----------------------------------------------------------------------------------*/
@@ -438,11 +409,14 @@ function js_404_page() {
 		echo '<h2 class="textcenter">404</h2>';
 		echo '<h3 class="textcenter">'. __('The content you requested was not found.', 'js') .'</h3>';
 		echo '<p class="textcenter">'. __('I don\'t know what happened, but you can try to find what you are looking for using the menu on top or the search form below.', 'js') .'</p>';
-		echo '<div class="aligncenter" style="width:195px;">';
+		echo '<div class="aligncenter" style="width:222px;">';
 		get_template_part('searchform');
 		echo '</div>';
 	echo '</div>';
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Portfolio Walker Class
@@ -511,6 +485,9 @@ class Walker_Category_Filter extends Walker_Category {
    }
 }
 
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Comments
 /*-----------------------------------------------------------------------------------*/
@@ -562,6 +539,9 @@ function js_comment( $comment, $args, $depth ) {
 			break;
 	endswitch;
 }
+
+
+
 
 /*-----------------------------------------------------------------------------------*/
 /* Comment Form
@@ -667,6 +647,8 @@ function js_comment_form( $args = array(), $post_id = null ) {
 }
 
 
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Load Options Framework
 /*-----------------------------------------------------------------------------------*/
@@ -676,11 +658,11 @@ if ( !function_exists( 'optionsframework_init' ) ) {
 	/* Set the file path based on whether the Options Framework Theme is a parent theme or child theme */
 	
 	if ( STYLESHEETPATH == TEMPLATEPATH ) {
-		define('OPTIONS_FRAMEWORK_URL', TEMPLATEPATH . '/admin/');
-		define('OPTIONS_FRAMEWORK_DIRECTORY', get_bloginfo('template_directory') . '/admin/');
+		define('OPTIONS_FRAMEWORK_URL', TEMPLATEPATH . '/includes/admin/');
+		define('OPTIONS_FRAMEWORK_DIRECTORY', get_bloginfo('template_directory') . '/includes/admin/');
 	} else {
-		define('OPTIONS_FRAMEWORK_URL', STYLESHEETPATH . '/admin/');
-		define('OPTIONS_FRAMEWORK_DIRECTORY', get_bloginfo('stylesheet_directory') . '/admin/');
+		define('OPTIONS_FRAMEWORK_URL', STYLESHEETPATH . '/includes/admin/');
+		define('OPTIONS_FRAMEWORK_DIRECTORY', get_bloginfo('stylesheet_directory') . '/includes/admin/');
 	}
 	
 	require_once (OPTIONS_FRAMEWORK_URL . 'options-framework.php');
@@ -730,8 +712,16 @@ if ( !function_exists( 'optionsframework_init' ) ) {
 <?php }
 
 /*-----------------------------------------------------------------------------------*/
-/* Theme Options WP_Head and WP_Footer Output
+/* Theme Options Functions nd WP_Head and WP_Footer Output
 /*-----------------------------------------------------------------------------------*/
+
+function js_logo_url ($fallback = 'logo.png') {
+	if (js_get_option('logo')) {
+		echo js_get_option('logo');
+	} else {
+		echo get_template_directory_uri() . '/images/' . $fallback;
+	}
+}
 
 /*-----------------------------------------------------------------------------------*/
 /* Add Favicon
@@ -767,16 +757,17 @@ add_action('wp_head', 'js_feedburner');
 /*-----------------------------------------------------------------------------------*/
 
 function js_analytics(){
-	//if is admin
-	if (!current_user_can('administrator')) {
-	
-		$output = js_get_option('analytics');
-		if ( $output <> "" ) {
-			echo stripslashes($output) . "\n";
+
+	if (js_get_option('analytics')) {
+
+		//display if isnt admin
+		if (!current_user_can('administrator')) {
+			$output = js_get_option('analytics');
+			echo "<script> var _gaq=[['_setAccount','".$output."'],['_trackPageview']]; (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1; g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js'; s.parentNode.insertBefore(g,s)}(document,'script')); </script>";
+		} else {
+			echo '<!-- analytics is hidden because you are admin -->';
 		}
-	
-	} else {
-		echo '<!-- analytics is hidden because you are admin -->';
+		
 	}
 }
 add_action('wp_footer','js_analytics');

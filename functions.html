@@ -1,0 +1,381 @@
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="no-js ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Framework</title>
+	<meta name="description" content="">
+	<link type="text/plain" rel="author" href="humans.txt">
+	
+	<link rel="shortcut icon" href="favicon.ico">
+	<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+	<meta name="viewport" content="width=device-width,initial-scale=1">
+
+	<link rel="stylesheet" href="style.css">
+
+	<script src="js/libs/modernizr-2.0.6.min.js"></script>
+	
+	<style>
+	
+	dl {
+		border: 1px solid #eee;
+		padding: 15px 20px 0 20px;
+	}
+	dt {
+		margin-bottom: 2px;
+	}
+	dl dd {
+		margin: 0;
+	}
+	
+	h1, h2, h3, h4, h5 {
+		text-transform: capitalize; 
+	}
+	
+	</style>
+	
+</head>
+<body>
+
+<div class="inside">
+	<!-- header -->
+	<header id="header" class="fixed">
+
+		<a href="" title="" id="logo"><img src="images/logo.png" alt="" title="" /></a>
+
+		<nav id="navigation">
+			<ul class="menu">
+				<li class="current"><a href="#" title="">Home</a></li>
+				<li><a href="#" title="">Portfolio</a>
+					<ul>
+						<li><a href="#" title="">3D Modeling</a></li>
+						<li><a href="#" title="">Animation</a></li>
+						<li><a href="#" title="">Photography</a>
+							<ul>
+								<li><a href="#" title="">Night</a></li>
+								<li><a href="#" title="">Day</a></li>
+								<li><a href="#" title="">Urban</a></li>
+							</ul>
+						</li>
+						<li><a href="#" title="">Webdesign</a></li>
+					</ul>
+				</li>
+				<li><a href="#" title="">Services</a></li>
+				<li><a href="#" title="">About</a></li>
+				<li><a href="#" title="">Contact-me</a></li>
+			</ul>
+		</nav><!-- end #navigation -->
+	</header>
+	<!-- header -->
+	
+	<section class="main post cf">
+
+<h1 class="title">Content Sections</h1>
+
+<dl>
+<dt>Header</dt>
+<dd><pre>&lt;?php get_header(); ?&gt;</pre></dd>
+
+<dt>Sidebar</dt>
+<dd><pre>&lt;?php get_sidebar(); ?&gt;</pre></dd>
+
+<dt>Footer</dt>
+<dd><pre>&lt;?php get_footer(); ?&gt;</pre></dd>
+
+<dt>Comments</dt>
+<dd><pre>&lt;?php comments_template(); ?&gt;</pre></dd>
+
+<dt>Get Template Part</dt>
+<dd><pre>&lt;?php get_template_part('filename', 'nameAfterDash') ?&gt;</pre>
+<pre>footer-widgets.php - &lt;?php get_template_part('footer', 'widgets') ?&gt;</pre>
+</dd>
+
+<dt>WP Header</dt>
+<dd><pre>&lt;?php wp_head(); ?&gt;</pre></dd>
+
+<dt>WP Footer</dt>
+<dd><pre>&lt;?php wp_footer(); ?&gt;</pre></dd>
+</dl>
+
+<h1 class="title">Custom Functions</h1>
+
+<dl>
+<h3>Get custom menu with fallback to categories or pages</h3>
+
+<dt>Function</dt>
+<dd><pre>
+function js_get_menu($location = null, $source = 'categories', $menu_class = 'menu') {
+	$menu = '';
+	
+	//if custom menu exists, create it
+	if ($location &amp;& function_exists('wp_nav_menu')) {
+	    $menu = wp_nav_menu( array( 
+	    	'theme_location' =&gt; $location,
+	    	'container' =&gt; '',
+	    	'fallback_cb' =&gt; '',
+	    	'menu_class' =&gt; $menu_class,
+	    	'echo' =&gt; false 
+	    ));
+	}
+
+	//if custom menu does not exist fallback to categories or pages
+	if ($menu == '') {
+	    echo '&lt;ul class=&quot;'. $menu_class .'&quot;&gt;';
+	    if ($source == 'categories') {
+	    	wp_list_categories('title_li=&depth=3');
+	    } else {
+	    	wp_list_pages('title_li=&depth=3');
+	    }
+	    echo '&lt;/ul&gt;';
+	} else {
+		//menu exists, echo menu
+	    echo ($menu);
+	}
+}
+</pre></dd>
+
+<dt>PHP</dt>
+<dd><pre>&lt;?php js_get_menu($location, $source, $menu_class); ?&gt;</pre>
+<pre>
+$location = null; //custom menu location
+$source = 'categories'; //the fallback source (categories or pages)
+$menu_class = 'menu'; //the class to add to the ul created by the menu
+</pre>
+</dd>
+</dl>
+
+
+<dl>
+<h3>Display post thumbnail with fallback to placehold.it</h3>
+
+<dt>Function</dt>
+<dd><pre>
+function js_thumbnail($thumb_size = 'thumbnail', $fallback_size = '50') {
+	$thumb_attr = array('title'	=&gt; __('View ') . get_the_title());
+	if (has_post_thumbnail()) {
+		the_post_thumbnail($thumb_size, $thumb_attr);
+	} else {
+		echo '&lt;img src=&quot;http://placehold.it/'.$fallback_size.'&quot; alt=&quot;Placeholder&quot;/&gt;';
+	}
+}
+</pre></dd>
+
+<dt>PHP</dt>
+<dd><pre>&lt;?php js_thumbnail($thumb_size, $fallback_size); ?&gt;</pre>
+<pre>
+$thumb_size = 'thumbnail'; //can be any predefined size (thumbnail, medium, large, original) or a custom size
+$fallback_size = '50'; //can be any size to fill the non existen thumbnail eg: 100x400
+</pre>
+</dd>
+</dl>
+
+
+
+<dl>
+<h3>Get thumbnail url</h3>
+
+<dt>Function</dt>
+<dd><pre>
+function js_thumbnail_url($size = 'thumbnail', $echo = false) {
+	$image_id = get_post_thumbnail_id($post-&gt;ID);
+	$image_url = wp_get_attachment_image_src($image_id, $size);
+	$image_url = $image_url[0];
+	
+	if ($echo) {
+		echo $image_url;
+	} else {
+		return $image_url;
+	}
+}
+</pre></dd>
+
+<dt>PHP</dt>
+<dd><pre>&lt;?php js_thumbnail_url($size, $echo); ?&gt;</pre>
+<pre>
+$size = 'thumbnail'; //can be any size (thumbnail, medium, large, original)
+$echo = false; //false returns the value to use inside php, true outputs the url
+</pre>
+</dd>
+</dl>
+
+<dl>
+<h3>Get the content of post by it's id</h3>
+
+<dt>Function</dt>
+<dd><pre>
+function js_get_content($the_id = null;) {
+	if ($the_id) {
+		$item_id = get_post($the_id);
+		$content = $item_id-&gt;post_content;
+		$content = apply_filters('the_content', $content);
+		$content = str_replace(']]&gt;', ']]&gt;', $content);
+		echo $content;
+	}
+}
+</pre></dd>
+
+<dt>PHP</dt>
+<dd><pre>&lt;?php js_get_content($the_id); ?&gt;</pre>
+<pre>
+$the_id = null; //insert post id
+</pre>
+</dd>
+</dl>
+
+<dl>
+<h3>Display link to author posts</h3>
+
+<dt>Function</dt>
+<dd><pre>
+function js_author($author_meta = 'nickname') {
+	$curr_author = get_the_author_meta('ID');
+	$curr_author_posts = get_author_posts_url($curr_author);
+	
+	echo '&lt;a href=&quot;'. $curr_author_posts .'&quot; title=&quot;'. __('View author posts', 'js') .'&quot;&gt;'. get_the_author_meta($author_meta) .'&lt;/a&gt;';
+}
+</pre></dd>
+
+<dt>PHP</dt>
+<dd><pre>
+&lt;?php js_author($author_meta); ?&gt;
+</pre>
+<pre>
+$author_meta = 'nickname'; //can be nickname, display_name, first_name, last_name, user_nicename
+</pre>
+</dd>
+</dl>
+
+<dl>
+<h3>Get custom menu with fallback to categories or pages</h3>
+
+<dt>Function</dt>
+<dd><pre></pre></dd>
+
+<dt>PHP</dt>
+<dd><pre></pre>
+<pre></pre>
+</dd>
+</dl>
+
+
+
+
+
+
+<h1 class="title">Global</h1>
+
+<dl>
+<h3>HTML Lang Attributes</h3>
+<dt>PHP</dt>
+<dd><pre>&lt;html &lt;?php language_attributes(); ?&gt; class=&quot;no-js ie6&quot;&gt;</pre></dd>
+
+<dt>Output</dt>
+<dd><pre>&lt;html dir=&quot;ltr&quot; lang=&quot;en-US&quot; class=&quot;no-js ie6&quot;&gt;</pre></dd>
+</dl>
+
+<dl>
+<h3>Charset</h3>
+<dt>PHP</dt>
+<dd><pre>&lt;meta charset=&quot;&lt;?php bloginfo('charset'); ?&gt;&quot;&gt;</pre></dd>
+
+<dt>Output</dt>
+<dd><pre>&lt;meta charset=&quot;UTF-8&quot;&gt;</pre></dd>
+</dl>
+
+<dl>
+<h3>Title</h3>
+<dt>PHP</dt>
+<dd><pre>&lt;title&gt;&lt;?php wp_title('&laquo;', true, 'right'); ?&gt; &lt;?php bloginfo('name'); ?&gt; | &lt;?php bloginfo('description'); ?&gt;&lt;/title&gt;</pre></dd>
+
+<dt>Output</dt>
+<dd><pre>&lt;title&gt;Sample Page &laquo;  Framework | Just another WordPress site&lt;/title&gt;</pre></dd>
+</dl>
+
+<dl>
+<h3>Template Directory</h3>
+<dt>PHP</dt>
+<dd><pre>&lt;?php echo get_template_directory_uri() ?&gt;/</pre></dd>
+
+<dt>Output</dt>
+<dd><pre>http://localhost/~johnsardine/framework/wp-content/themes/wp-framework/</pre></dd>
+</dl>
+
+<dl>
+<h3>Home URL</h3>
+<dt>PHP</dt>
+<dd><pre>&lt;?php echo home_url( '/' ); ?&gt;</pre></dd>
+
+<dt>Output</dt>
+<dd><pre>http://localhost/~johnsardine/framework/</pre></dd>
+</dl>
+
+<dl>
+<h3>Loop</h3>
+<dt>PHP</dt>
+<dd><pre>
+&lt;?php if (have_posts()) : while (have_posts()) : the_post(); ?&gt;
+
+	&lt;!-- loop --&gt;
+	&lt;?php post_class('custom-class'); ?&gt;
+
+	&lt;?php the_title(); ?&gt;
+
+	&lt;?php the_permalink(); ?&gt;
+
+	&lt;?php the_content(); ?&gt;
+
+&lt;?php endwhile; ?&gt;
+
+	&lt;!-- static stuff as navigation --&gt;
+
+&lt;?php else : ?&gt;
+
+	&lt;!-- else --&gt;
+
+&lt;?php endif; ?&gt;
+</pre></dd>
+</dl>
+
+<dl>
+<h3>Sidebar</h3>
+<dt>PHP</dt>
+<dd><pre>&lt;?php get_sidebar(); ?&gt;</pre></dd>
+</dl>
+
+	</section>
+	
+</div><!--! end of #container -->
+
+<p id="jquery-test" class="info">jQuery is not loaded (http://localhost/ needed)</p>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.js"></script>
+<!-- <script src="js/libs/jquery-1.6.2.js"></script> -->
+<script>window.jQuery || document.write('<script src="js/libs/jquery-1.6.2.js"><\/script>')</script>
+
+<!-- scripts concatenated and minified via ant build script-->
+<script src="js/jquery.cookie.js"></script>
+<script src="js/jquery.easytabs.js"></script>
+<script src="js/jquery.fancybox.all.js"></script>
+<script src="js/script.js"></script>
+<!-- end scripts-->
+
+<script>
+	var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']]; // Change UA-XXXXX-X to be your site's ID
+	(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.async=1;
+	g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+	s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<!--[if lt IE 7 ]>
+	<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.2/CFInstall.min.js"></script>
+	<script>window.attachEvent("onload",function(){CFInstall.check({mode:"overlay"})})</script>
+<![endif]-->
+
+</body>
+</html>
