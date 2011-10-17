@@ -1,0 +1,301 @@
+body {
+  font-family: "DroidSansRegular", sans-serif;
+  font-size: 12px;
+  line-height: 20px;
+  *font-size: small;
+  color: #333;
+  background: #fcfcfc;
+  text-shadow: 0 1px 0 #fff;
+}
+/* !Hyperlinks */
+a, a:active, a:visited {
+  color: #c81414;
+  text-decoration: none;
+  transition: ease-in-out all 0.3s;
+  -moz-transition: ease-in-out all 0.3s;
+  -webkit-transition: ease-in-out all 0.3s;
+}
+a:hover {
+  color: #333;
+  text-shadow: none;
+}
+strong {
+  font-family: "DroidSansBold", sans-serif;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "BebasNeueRegular", sans-serif;
+  color: #333;
+}
+/* Images */
+img {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  -moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+  -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, 0.6);
+}
+/* !Buttons */
+a.button,
+span.button a,
+input[type="submit"],
+input[type="button"] {
+  display: inline-block;
+  margin-bottom: 18px;
+  text-decoration: none;
+  font-size: 18px;
+  border: none;
+  padding: 10px 18px;
+  font-family: "BebasNeueRegular", sans-serif;
+  color: #fff;
+  background: #c81414 url(images/stripes.png);
+  text-shadow: none;
+  text-align: center;
+  transition: ease-in-out all 0.3s;
+  -moz-transition: ease-in-out all 0.3s;
+  -webkit-transition: ease-in-out all 0.3s;
+}
+a.button:hover,
+span.button a:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover {
+  background: #333333 url(images/stripes.png);
+}
+a.button:active,
+span.button a:active,
+input[type="submit"]:active,
+input[type="button"]:active {
+  position: relative;
+  top: 1px;
+}
+a.button.alignright,
+span.button a.alignright,
+input[type="submit"].alignright,
+input[type="button"].alignright {
+  float: right;
+  clear: both;
+}
+a.button.full,
+span.button a.full,
+input[type="submit"].full,
+input[type="button"].full {
+  display: block;
+  clear: both;
+}
+a.button.small,
+span.button a.small,
+input[type="submit"].small,
+input[type="button"].small {
+  font-size: 15px;
+  padding: 4px 10px;
+}
+a.button.space,
+span.button a.space,
+input[type="submit"].space,
+input[type="button"].space {
+  margin-right: 9px;
+}
+a.button.neutral,
+span.button a.neutral,
+input[type="submit"].neutral,
+input[type="button"].neutral {
+  background: #333333 url(images/stripes.png);
+}
+a.button.neutral:hover,
+span.button a.neutral:hover,
+input[type="submit"].neutral:hover,
+input[type="button"].neutral:hover {
+  background: #c81414 url(images/stripes.png);
+}
+a.button.half,
+span.button a.half,
+input[type="submit"].half,
+input[type="button"].half {
+  width: 42.2%;
+}
+a.button.half + .half,
+span.button a.half + .half,
+input[type="submit"].half + .half,
+input[type="button"].half + .half {
+  margin-right: 0;
+  float: right;
+  clear: both;
+}
+input[type="submit"], input[type="button"] {
+  padding-bottom: 8px;
+}
+input[type="submit"].full, input[type="button"].full {
+  width: 100%;
+}
+/* Messages */
+.valid, .attention, .error {
+  position: relative;
+  z-index: 5;
+  border-radius: 3px;
+  border: 1px solid;
+  line-height: 19px;
+  padding: 5px 10px;
+  text-shadow: none;
+}
+.valid.fluid, .attention.fluid, .error.fluid {
+  display: inline;
+  padding: 5px 10px;
+}
+.valid.center, .attention.center, .error.center {
+  text-align: center;
+}
+.valid {
+  background-color: #bdf6c0;
+  border-color: #83df7a;
+}
+.attention {
+  background-color: #FFFBCC;
+  border-color: #E6DB55;
+}
+.error {
+  background-color: #FFEBE8;
+  border-color: #e08a8a;
+}
+/* !Content Boxes */
+.box {
+  padding: 12px 18px 0 18px;
+  border: 1px solid #c81414;
+  clear: both;
+  margin-bottom: 18px;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  -moz-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
+}
+.box.half {
+  width: 45%;
+}
+.box.gray {
+  background: url(images/stripes.png);
+}
+.box.alignright {
+  float: right;
+}
+.box.alignleft {
+  float: left;
+}
+/* !Pull */
+.pull-left {
+  margin-left: -100px;
+}
+.pull-right {
+  margin-right: -100px;
+}
+/* Blockquote */
+blockquote {
+  margin-left: 25px;
+  border-left: 5px solid #666;
+  padding: 5px 5px 5px 10px;
+  margin-bottom: 18px;
+  font-style: italic;
+}
+blockquote p {
+  display: inline-block;
+  margin: 0;
+}
+blockquote.left, blockquote.right {
+  margin: 0 0 18px 0;
+  position: relative;
+  width: 50%;
+  display: block;
+  font-size: 1.2em;
+  padding: 18px 18px 0 18px;
+}
+blockquote.left:before,
+blockquote.right:before,
+blockquote.left:after,
+blockquote.right:after {
+  font-size: 14em;
+  font-family: serif;
+}
+blockquote.left p, blockquote.right p {
+  margin-bottom: 18px;
+}
+blockquote.left {
+  float: left;
+  text-align: left;
+  border: 0;
+  border-left: 5px solid #666;
+}
+blockquote.left:after {
+  color: #ddd;
+  float: right;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  right: 10%;
+  content: '”';
+}
+blockquote.right {
+  float: right;
+  text-align: right;
+  border: 0;
+  border-right: 5px solid #666;
+}
+blockquote.right:before {
+  color: #ddd;
+  float: left;
+  position: absolute;
+  z-index: -1;
+  top: 50%;
+  left: -10%;
+  content: '“';
+}
+blockquote cite, blockquote em, blockquote i {
+  font-style: normal;
+}
+/* !Tables */
+/* -------------------------------- */
+table,
+th,
+tr,
+td {
+  border: none;
+  padding: 8px;
+}
+table {
+  margin-bottom: 18px;
+}
+table caption {
+  background: #eee;
+  padding: 8px 0;
+  font-weight: bold;
+}
+table tbody tr {
+  color: #666;
+  transition: ease-in-out all 0.3s;
+  -moz-transition: ease-in-out all 0.3s;
+  -webkit-transition: ease-in-out all 0.3s;
+}
+table tbody tr:nth-child(even) {
+  background: #eee;
+}
+table tbody tr:hover {
+  background: #c81414;
+  color: #fff;
+  text-shadow: none;
+  transition: ease-in-out all 0.3s;
+  -moz-transition: ease-in-out all 0.3s;
+  -webkit-transition: ease-in-out all 0.3s;
+}
+table thead tr, table tfoot tr {
+  color: #fff;
+  background: #666;
+  text-shadow: none;
+}
+tr:hover ::-moz-selection {
+  background: #fff;
+  color: #c81414;
+  text-shadow: none;
+}
+tr:hover ::selection {
+  background: #fff;
+  color: #c81414;
+  text-shadow: none;
+}

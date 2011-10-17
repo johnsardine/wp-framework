@@ -1,0 +1,355 @@
+/* !Headings */
+/* -------------------------------- */
+/* Settings for font-size: 12px; & line-height: 18px;*/
+h1, h2, h3, h4, h5, h6 {
+	font-weight: bold;
+}
+
+h1{
+	font-size: 3em;
+	line-height: 1.5em;
+	margin-bottom: 7px;
+}
+h2{
+    font-size: 2.5em;
+    line-height: 1.1em;
+    margin-bottom: 14px;
+}
+h3{
+    font-size: 2em;
+    line-height: 1em;
+    margin-bottom: 9px;
+}
+h4{
+	font-size: 1.5em;
+	line-height: 0.8em;
+	margin-bottom: 2px;
+}
+h5{
+	font-size: 1.167em;
+}
+h6{
+	font-size: 1em;
+}
+
+/*--- PARAGRAPHS ---*/
+p {
+  margin-bottom: 20px;
+}
+
+/* !Lists */
+/* -------------------------------- */
+ul,ol{
+	margin: 0 0 20px 1.8em;
+}
+ul ul,
+ol ol{
+	margin: 0 0 0 20px;
+}
+ol {
+	list-style-type: decimal;
+}
+ol ol {
+	list-style: upper-alpha;
+}
+ol ol ol {
+	list-style: lower-roman;
+}
+ol ol ol ol {
+	list-style: lower-alpha;
+}
+ul ul,
+ol ol,
+ul ol,
+ol ul {
+	margin-bottom: 0;
+}
+dl {
+	margin: 0 0 20px 1em;
+}
+dt {
+	font-weight: bold;
+}
+dd {
+	margin: 0 0 0 20px;
+}
+
+/* !Other */
+/* -------------------------------- */
+hr{
+	margin: 0 0 20px 0;
+	border: 0;
+	border-bottom: 1px solid #333;
+}
+small {
+	font-size: 85%;
+}
+strong, th {
+	font-weight: bold;
+}
+cite,
+em,
+i {
+	font-style: italic;
+}
+big {
+	font-size: 131.25%;
+}
+ins {
+	background: #ffc;
+	text-decoration: none;
+}
+abbr,
+acronym {
+	border-bottom: 1px dotted #888;
+	cursor: help;
+}
+sub {
+	vertical-align: sub;
+	font-size: smaller;
+}
+sup {
+	vertical-align: super;
+	font-size: smaller;
+}
+ins {
+	background-color:#ff9;
+	color:#000;
+	text-decoration:none;
+}
+mark {
+	background-color:#ff9;
+	color:#000;
+	font-style:italic;
+	font-weight:bold;
+}
+del {
+	text-decoration: line-through;
+}
+abbr[title],
+dfn[title] {
+	border-bottom:1px dotted;
+	cursor:help;
+}
+
+/* !Code */
+/* -------------------------------- */
+pre, code, kbd, samp { font-family: monospace, sans-serif; }
+/*
+pre {
+*	white-space: pre; CSS2
+*	white-space: pre-wrap; CSS 2.1
+*	white-space: pre-line; CSS 3 (and 2.1 as well, actually)
+*	word-wrap: break-word; IE
+*	
+*	overflow-x: scroll;
+}
+*/
+pre {
+	white-space: pre; /* CSS 2.1 */
+	word-wrap: break-word; /* IE */
+	
+	overflow-x: scroll;
+}
+
+/* !Input Elements */
+/* -------------------------------- */
+input, select { vertical-align:bottom; }
+select, input, textarea, button { font:99% sans-serif; }
+textarea { overflow: auto; }
+label { font-weight: bold; font-family: sans-serif; }
+
+/* Normal */
+input[type="text"],
+input[type="password"],
+input[type="tel"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+textarea {
+	line-height: 9px;
+	overflow-x:hidden;
+	border: 1px solid #666;
+	color: #666;
+	padding:9px;
+	margin-bottom:18px;
+	.box-shadow( inset 0, 0, 2px, rgba(0,0,0,0.3));
+}
+p input[type="text"],
+p input[type="password"],
+p input[type="tel"],
+p input[type="number"],
+p input[type="email"],
+p input[type="url"],
+p textarea {
+	margin-bottom: 0 !important;
+}
+/* Focus */
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="tel"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+textarea:focus {
+	border: 1px solid #c81414;
+	.box-shadow( 0, 0, 2px, rgba(0,0,0,0.3));
+}
+radio, check{
+	margin: 0 0 9px 0;
+}
+.form-desc {
+	position: relative;
+	top: -6px;
+	margin-left: 10px;
+	color: #999;
+}
+input {
+	& + .valid,
+	& + .attention,
+	& + .error,
+	& + .invalid {
+		display: inline;
+		position: relative;
+		top: -6px;
+		margin-left: 10px;
+	}
+	& + label {
+		display: inline;
+	}
+}
+textarea {
+	line-height: 18px;
+	& + .invalid {
+		display: inline-block;
+	}
+}
+
+/* !Text Highlight */
+::-moz-selection{ background: #c81414; color:#fff; text-shadow: none; }
+::selection { background:#c81414; color:#fff; text-shadow: none; }
+
+/* !Fieldset */
+/* -------------------------------- */
+fieldset {
+	border: 1px solid #ccc;
+	padding-top: 18px;
+	padding-left: 18px;
+	padding-right: 18px;
+	padding-bottom: 0;
+	margin-bottom: 18px;
+}
+fieldset legend {
+	background: none;
+	font-weight: bold;
+	padding: 0 24px;
+}
+
+/* !Alignment */
+/* -------------------------------- */
+.textcenter {
+	display: block;
+	text-align: center;
+}
+.textright {
+	display: block;
+	text-align: right;
+}
+img {
+	margin: 0;
+	height: auto;
+	width: auto;
+	margin-bottom:18px;
+}
+p img {
+	margin-bottom: 0;
+}
+.alignleft,
+img.alignleft {
+	display: inline;
+	float: left;
+	margin-right: 20px;
+	margin-top: 0;
+}
+.alignright,
+img.alignright {
+	display: inline;
+	float: right;
+	margin-left: 20px;
+	margin-top: 0;
+}
+.aligncenter,
+img.aligncenter {
+	clear: both;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+img.alignleft,
+img.alignright,
+img.aligncenter {
+	margin-top: 0;
+	margin-bottom: 20px;
+}
+
+.wp-caption {
+	img {
+		margin-bottom: 10px;
+	}
+	.wp-caption-text {
+		text-align: center;
+		color: #999;
+	}	
+}
+
+#wpadminbar {
+	box-shadow: 0 1px 3px rgba(0,0,0,0.5);
+}
+
+/* colors for form validity */
+input:valid, textarea:valid   {  }
+input:invalid, textarea:invalid { 
+      border-radius: 1px;
+    -moz-box-shadow: 0 0 5px red; 
+ -webkit-box-shadow: 0 0 5px red; 
+         box-shadow: 0 0 5px red;
+}
+.no-boxshadow input:invalid, 
+.no-boxshadow textarea:invalid { background-color: #f0dddd; }
+
+/* 
+ * Non-semantic helper classes 
+ */
+/* for image replacement */
+.ir { display: block; text-indent: -999em; overflow: hidden; background-repeat: no-repeat; text-align: left; direction: ltr; }
+
+/* Hide for both screenreaders and browsers
+   css-discuss.incutio.com/wiki/Screenreader_Visibility */
+.hidden { display: none; visibility: hidden; } 
+
+/* Hide only visually, but have it available for screenreaders 
+   www.webaim.org/techniques/css/invisiblecontent/  &  j.mp/visuallyhidden  */
+.visuallyhidden { position: absolute !important;    
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px); }
+
+/* Hide visually and from screenreaders, but maintain layout */
+.invisible { visibility: hidden; }
+
+/* 
+ * print styles
+ * inlined to avoid required HTTP connection www.phpied.com/delay-loading-your-print-css/ 
+ */
+@media print {
+  * { background: transparent !important; color: #444 !important; text-shadow: none !important; }
+  a, a:visited { color: #444 !important; text-decoration: underline; }
+  a:after { content: " (" attr(href) ")"; } 
+  abbr:after { content: " (" attr(title) ")"; }
+  .ir a:after { content: ""; }  /* Don't show links for images */
+  pre, blockquote { border: 1px solid #999; page-break-inside: avoid; }
+  thead { display: table-header-group; } /* css-discuss.incutio.com/wiki/Printing_Tables */ 
+  tr, img { page-break-inside: avoid; }
+  @page { margin: 0.5cm; }
+  p, h2, h3 { orphans: 3; widows: 3; }
+  h2, h3{ page-break-after: avoid; }
+}
