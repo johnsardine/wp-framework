@@ -31,6 +31,34 @@ include_once 'includes/hello-bar.php';
 include_once 'includes/modal-window.php';
 /* call using <?php js_modal_window(); ?> */
 
+
+/*-----------------------------------------------------------------------------------*/
+/* Run on theme install
+/*-----------------------------------------------------------------------------------*/
+
+if (!get_option('js_theme_setup')) {
+
+	//Setup image sizes
+	update_option('thumbnail_size_w', 164);
+	update_option('thumbnail_size_h', 999);
+	update_option('thumbnail_crop', false);
+	update_option('medium_size_w', 312);
+	update_option('medium_size_h', 9999);
+	update_option('large_size_w', 520);
+	update_option('large_size_h', 9999);
+	
+	//permalink
+	update_option('permalink_structure', '/%category%/%postname%/');
+
+
+	//define theme setup as true
+	update_option('js_theme_setup', true);
+
+}
+
+
+
+
 /*-----------------------------------------------------------------------------------*/
 /* Define Max Image Width
 /*-----------------------------------------------------------------------------------*/
@@ -223,13 +251,6 @@ function js_thumbnail_url($size = 'thumbnail', $echo = false) {
 /* Define Image Sizes
 /*-----------------------------------------------------------------------------------*/
 add_theme_support('post-thumbnails');
-//default sizes
-update_option('thumbnail_size_w', 160);
-update_option('thumbnail_size_h', 100);
-update_option('medium_size_w', 340);
-update_option('medium_size_h', 9999);
-update_option('large_size_w', 640);
-update_option('large_size_h', 9999);
 //custom sizes
 //add_image_size( 'small-thumb', 50, 50, true ); // name, width, height, crop
 
