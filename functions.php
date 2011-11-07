@@ -216,6 +216,11 @@ function js_get_menu($location = null, $source = 'categories', $menu_class = 'me
 //    	echo '<hr/>';
 //    endforeach;
 //endif;
+
+/*-----------------------------------------------------------------------------------*/
+/*	Get Post Thumbnail with fallback
+/*-----------------------------------------------------------------------------------*/
+
 function js_thumbnail($thumb_size = 'thumbnail', $fallback_size = '50') {
 	$thumb_attr = array('title'	=> __('View ') . get_the_title());
 	if (has_post_thumbnail()) {
@@ -229,7 +234,7 @@ function js_thumbnail($thumb_size = 'thumbnail', $fallback_size = '50') {
 
 
 /*-----------------------------------------------------------------------------------*/
-/*	Get featured image url
+/*	Get Post Thumbnail Image URL
 /*-----------------------------------------------------------------------------------*/
 
 function js_thumbnail_url($size = 'thumbnail', $echo = false) {
@@ -270,6 +275,7 @@ if ( function_exists('register_sidebar') ) {
 	'after_widget'  => '</div>',
 	'before_title'  => '<h3 class="widgettitle">',
 	'after_title'	=> '</h3>'));
+
 }
 
 
@@ -314,7 +320,7 @@ function excerpt($limit, $echo_excerpt = true) {
 
 
 /*-----------------------------------------------------------------------------------*/
-/*	Is Category or sub category of the entered id by http://valendesigns.com/
+/*	Is Category or sub category of the entered id - http://valendesigns.com/
 /*-----------------------------------------------------------------------------------*/
 if (!function_exists('is_category_or_sub')) {
 	function is_category_or_sub($cat_id = 0) {
@@ -329,7 +335,7 @@ if (!function_exists('is_category_or_sub')) {
 
 
 /*-----------------------------------------------------------------------------------*/
-/*	Is page or sub page of the entered id/name by http://valendesigns.com/
+/*	Is page or sub page of the entered id/name - http://valendesigns.com/
 /*-----------------------------------------------------------------------------------*/
 if (!function_exists('is_page_or_sub')) {
     function is_page_or_sub($my_page) {
