@@ -85,52 +85,73 @@ remove_action( 'wp_head', 'wp_generator' );
 
 
 /*-----------------------------------------------------------------------------------*/
-/* Register Scripts
+/* Enquee Styles and Scripts
+/*
+/* wp_enqueue_scripts (for the frontend)
+/* login_enqueue_scripts (for the login screen)
+/* admin_enqueue_scripts (for the admin dashboard)
 /*-----------------------------------------------------------------------------------*/
 
-function js_scripts() {
-	if (!is_admin()) {
-		// comment out the next two lines to load the local copy of jQuery
-		wp_deregister_script('jquery');
-		wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', false, null, false);
-		wp_register_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr.min.js', false, '2.0.6', false);
-		wp_register_script('cookie', get_template_directory_uri() . '/js/plugins/jquery.cookie.js', 'jquery', '1.0', true);
-		wp_register_script('fancybox', get_template_directory_uri() . '/plugins/jquery.fancybox.all.js', 'jquery', '1.3.4', true);
-		wp_register_script('custom', get_template_directory_uri() . '/js/script.js', 'jquery', '1.0', true);
-		
-		wp_enqueue_script('modernizr');
-		wp_enqueue_script('jquery');
+function js_enquee_resources() {
+
+	//Register Scripts
+	// comment out the next two lines to load the local copy of jQuery
+	wp_deregister_script('jquery');
+	wp_register_script('jquery', 'http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js', false, null, false);
+	wp_register_script('modernizr', get_template_directory_uri() . '/js/libs/modernizr.min.js', false, '2.0.6', false);
+	wp_register_script('cookie', get_template_directory_uri() . '/js/plugins/jquery.cookie.js', 'jquery', '1.0', true);
+	wp_register_script('fancybox', get_template_directory_uri() . '/plugins/jquery.fancybox.all.js', 'jquery', '1.3.4', true);
+	wp_register_script('custom', get_template_directory_uri() . '/js/script.js', 'jquery', '1.0', true);
+	
+	//Register Styles
+	
+	//Load Global Scripts
+	wp_enqueue_script('modernizr');
+	wp_enqueue_script('jquery');
+	//wp_enqueue_script('cookie');
+	wp_enqueue_script('fancybox');
+	
+	//Load Global Styles
+	
+	//if is homepage or front page
+	if (is_home() || is_front_page()) {
 		wp_enqueue_script('cookie');
-		wp_enqueue_script('fancybox');
 	}
-}
-add_action('init', 'js_scripts');
-
-
-/* Load Filtering and Slides Script on Works */
-function js_portfolio_script() {
-	if (is_page_template('template-portfolio.php')) {
-			wp_enqueue_script('quicksand'); 
-		}
-	if (get_post_type() == 'js_portfolio') {
-		wp_enqueue_script('slides');
-	}	
-}
-add_action('wp_print_scripts', 'js_portfolio_script');
-
-// load single scripts only on single pages
-function js_single_script() {
-	if(is_singular() || is_page()) {
-	wp_enqueue_script( 'comment-reply' );
+	
+	
+	//If is singular - post, page or attachment
+	if (is_singular()) {
+		wp_enqueue_script('comment-reply');
 	}
+	
 }
-add_action('wp_print_scripts', 'js_single_script');
+add_action('wp_enqueue_scripts', 'js_enquee_resources');
 
-/* Load custom scripts at the end */
-function js_custom_script() {
-		wp_enqueue_script('custom');
-}
-add_action('wp_print_scripts', 'js_custom_script');
+
+//	/* Load Filtering and Slides Script on Works */
+//	function js_portfolio_script() {
+//		if (is_page_template('template-portfolio.php')) {
+//				wp_enqueue_script('quicksand'); 
+//			}
+//		if (get_post_type() == 'js_portfolio') {
+//			wp_enqueue_script('slides');
+//		}	
+//	}
+//	add_action('wp_print_scripts', 'js_portfolio_script');
+//	
+//	// load single scripts only on single pages
+//	function js_single_script() {
+//		if(is_singular() || is_page()) {
+//		wp_enqueue_script( 'comment-reply' );
+//		}
+//	}
+//	add_action('wp_print_scripts', 'js_single_script');
+//	
+//	/* Load custom scripts at the end */
+//	function js_custom_script() {
+//			wp_enqueue_script('custom');
+//	}
+//	add_action('wp_print_scripts', 'js_custom_script');
 
 
 
@@ -221,8 +242,10 @@ function js_get_menu($location = null, $source = 'categories', $menu_class = 'me
 /*	Get Post Thumbnail with fallback
 /*-----------------------------------------------------------------------------------*/
 
-function js_thumbnail($thumb_size = 'thumbnail', $fallback_size = '50') {
-	$thumb_attr = array('title'	=> __('View ') . get_the_title());
+function js_thumbnail($thumb_size = 'thumbnail', $fallback_size = '50', $thumb_attr = null) {
+	if (!$thumb_attr) {
+		$thumb_attr = array('title'	=> __('View ') . get_the_title());
+	}
 	if (has_post_thumbnail()) {
 		the_post_thumbnail($thumb_size, $thumb_attr);
 	} else {
@@ -235,6 +258,25 @@ function js_thumbnail($thumb_size = 'thumbnail', $fallback_size = '50') {
 
 /*-----------------------------------------------------------------------------------*/
 /*	Get Post Thumbnail Image URL
+/*-----------------------------------------------------------------------------------*/
+
+function js_thumbnail_url($size = 'thumbnail', $echo = false) {
+	$image_id = get_post_thumbnail_id($post->ID);
+	$image_url = wp_get_attachment_image_src($image_id, $size);
+	$image_url = $image_url[0];
+	
+	if ($echo) {
+		echo $image_url;
+	} else {
+		return $image_url;
+	}
+}
+
+
+
+
+/*-----------------------------------------------------------------------------------*/
+/*	Get link to resource in theme folder
 /*-----------------------------------------------------------------------------------*/
 
 function js_thumbnail_url($size = 'thumbnail', $echo = false) {
@@ -456,6 +498,8 @@ class Walker_Category_Filter extends Walker_Category {
       $cat_name = esc_attr( $category->name);
       $cat_slug = esc_attr( $category->slug);
       $cat_name = apply_filters( 'list_cats', $cat_name, $category );
+      $cat_link = esc_attr( get_term_link($category) );
+      
       $link = '<a href="#" data-type="'.strtolower(preg_replace('/\s+/', '-', $cat_slug)).'" ';
       if ( $use_desc_for_title == 0 || empty($category->description) )
          $link .= 'title="' . sprintf(__( 'View all posts filed under %s' ), $cat_name) . '"';

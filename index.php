@@ -43,6 +43,8 @@
 	<!-- main -->
 	<div id="main" class="layout-left">
 	
+	<?php if (is_home() || is_front_page()) { echo '<h1>Home || Front Page</h1>'; } ?>
+	
 		<!-- content -->
 		<section id="content" class="main full">
 		
