@@ -94,6 +94,10 @@ remove_action( 'wp_head', 'wp_generator' );
 
 function js_enquee_resources() {
 
+	//Register styles
+	wp_register_style('theme-style', get_bloginfo('template_directory').'/style.css', array(), '', 'all');
+	wp_enqueue_style('theme-style');
+
 	//Register Scripts
 	// comment out the next two lines to load the local copy of jQuery
 	wp_deregister_script('jquery');
