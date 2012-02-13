@@ -266,6 +266,22 @@ $author_meta = 'nickname'; //can be nickname, display_name, first_name, last_nam
 
 
 
+<h1 class="title">Multi Language</h1>
+
+<dl>
+<h3>Header With Flags</h3>
+<dt>PHP</dt>
+<dd><pre>&lt;!-- language selector --&gt;
+&lt;div id=&quot;lang-selector&quot;&gt;
+&lt;?php $current_lang = constant('ICL_LANGUAGE_CODE'); ?&gt;
+    &lt;a href=&quot;&lt;?php echo bloginfo('wpurl'); ?&gt;/&quot; title=&quot;&quot; &lt;?php if ( $current_lang == 'pt-pt' ) { echo 'class=&quot;current&quot;'; } ?&gt;&gt;PT&lt;/a&gt;
+    &lt;a href=&quot;&lt;?php echo bloginfo('wpurl'); ?&gt;/en/&quot; title=&quot;&quot; &lt;?php if ( $current_lang == 'en' ) { echo 'class=&quot;current&quot;'; } ?&gt;&gt;ENG&lt;/a&gt;
+    &lt;a href=&quot;&lt;?php echo bloginfo('wpurl'); ?&gt;/da/&quot; title=&quot;&quot; &lt;?php if ( $current_lang == 'da' ) { echo 'class=&quot;current&quot;'; } ?&gt;&gt;DK&lt;/a&gt;
+&lt;/div&gt;
+&lt;!-- language selector --&gt;</pre></dd>
+
+
+
 
 
 <h1 class="title">Global</h1>

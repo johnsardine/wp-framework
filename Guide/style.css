@@ -524,7 +524,7 @@ address {
 code, pre {
   padding: 0 3px 2px;
   font-family: Monaco, Andale Mono, Courier New, monospace;
-  font-size: 12px;
+  font-size: 10px;
   -moz-border-radius: 3px;
   -webkit-border-radius: 3px;
   border-radius: 3px;
@@ -540,7 +540,6 @@ pre {
   padding: 9.5px;
   margin: 0 0 20px;
   line-height: 20px;
-  font-size: 12px;
   border: 1px solid #ccc;
   border: 1px solid rgba(0, 0, 0, 0.15);
   -moz-border-radius: 3px;
@@ -562,10 +561,10 @@ input, textarea {
   border: 1px solid #aaa;
   color: #999;
   background-color: #fff;
-  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.85, white), color-stop(0.99, #eeeeee));
-  background-image: -webkit-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-  background-image: -moz-linear-gradient(center bottom, white 85%, #eeeeee 99%);
-  background-image: -o-linear-gradient(bottom, white 85%, #eeeeee 99%);
+  background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.85, #ffffff), color-stop(0.99, #eeeeee));
+  background-image: -webkit-linear-gradient(center bottom, #ffffff 85%, #eeeeee 99%);
+  background-image: -moz-linear-gradient(center bottom, #ffffff 85%, #eeeeee 99%);
+  background-image: -o-linear-gradient(bottom, #ffffff 85%, #eeeeee 99%);
   background-image: -ms-linear-gradient(top, #ffffff 85%, #eeeeee 99%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#eeeeee',GradientType=0 );
   background-image: linear-gradient(top, #ffffff 85%, #eeeeee 99%);
