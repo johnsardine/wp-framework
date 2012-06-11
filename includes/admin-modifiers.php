@@ -107,10 +107,10 @@ function js_custom_login_logo() {
 	</style>';
 }
 function js_wp_login_url() {
-	echo home_url();
+	return home_url();
 }
 function js_wp_login_title() {
-	echo get_option('blogname');
+	return get_option('blogname');
 }
 
 add_action('login_head', 'js_custom_login_logo');
